@@ -1,5 +1,8 @@
 package org.danikzhezmer;
 
+import org.danikzhezmer.model.Command;
+
+
 import java.util.Scanner;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -7,12 +10,28 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-       Scanner scanner = new Scanner(System.in);
-        String line;
-        do {
-            line = scanner.nextLine();
-            System.out.println(line);
 
-        }while(!line.equals("Exit"));
+        Validator validator = new Validator();
+        Parser parser = new Parser(validator);
+
+        Scanner scanner = new Scanner(System.in);
+        String line;
+
+        while (true) {
+            line = scanner.nextLine();
+            if(line.equals("exit")){
+                break;
+            }
+
+            try{
+               Command command = parser.parse(line);
+                System.out.println(command);
+
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+
+
+        }
     }
 }
