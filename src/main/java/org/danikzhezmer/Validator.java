@@ -6,17 +6,12 @@ public class Validator {
         String[] words = value.split(" ");
         switch (words[0]) {
             case "create" -> validateCreate(value);
-
             case "get" -> validateGet(value);
-
             case "update" -> validateUpdate(value);
-
             case "delete" -> validateDelete(value);
-
             default -> wrongCommand("wrong command");
         }
     }
-
     private void wrongCommand(String message) {
         throw new IllegalArgumentException(message);
     }
