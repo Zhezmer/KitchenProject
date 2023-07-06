@@ -5,8 +5,12 @@ import java.util.List;
 
 public class Storage {
     private HashMap<Integer, String> map;
-    private int id = 0;
+    private int id;
 
+    public Storage(HashMap<Integer, String> map, int id) {
+        this.map = map;
+        this.id = id;
+    }
 
     public String get(int id) {
         return map.get(id);
@@ -18,7 +22,7 @@ public class Storage {
 
     public void create(String value) {
         this.id++;
-        map.putIfAbsent(this.id, value);
+        this.map.putIfAbsent(this.id, value);
     }
 
     public void update(int id, String value) {
