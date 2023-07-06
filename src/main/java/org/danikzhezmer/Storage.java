@@ -12,19 +12,20 @@ public class Storage {
         return map.get(id);
     }
 
-   public List<String> getAll() {
+    public List<String> getAll() {
         return (List<String>) map.values();
     }
-    public void create(String value){
+
+    public void create(String value) {
         this.id++;
         map.putIfAbsent(this.id, value);
     }
 
-   public void update(int id, String value){
-       map.replace(id, value);
-   }
+    public void update(int id, String value) {
+        map.replace(id, value);
+    }
 
-   public void delete(int id){
+    public void delete(int id) {
         map.remove(id);
-   }
+    }
 }
