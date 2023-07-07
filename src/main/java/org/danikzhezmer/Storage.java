@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Storage {
-    private HashMap<Integer, String> map;
+    private HashMap<Integer, String> map = new HashMap<>();
     private int id;
 
     public Storage(HashMap<Integer, String> map, int id) {
         this.map = map;
         this.id = id;
+    }
+
+    public Storage() {
+
     }
 
     public String get(int id) {
@@ -21,8 +25,8 @@ public class Storage {
     }
 
     public void create(String value) {
-        this.id++;
-        this.map.putIfAbsent(this.id, value);
+
+        map.putIfAbsent(id, value);
     }
 
     public void update(int id, String value) {
