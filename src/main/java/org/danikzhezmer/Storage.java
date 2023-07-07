@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Storage {
     private HashMap<Integer, String> map = new HashMap<>();
-    private int id;
+    private int id = 0;
 
     public Storage(HashMap<Integer, String> map, int id) {
         this.map = map;
@@ -14,6 +14,9 @@ public class Storage {
 
     public Storage() {
 
+    }
+    public int idIncGet(int id){
+        return this.id = id + 1;
     }
 
     public String get(int id) {
@@ -25,8 +28,7 @@ public class Storage {
     }
 
     public void create(String value) {
-
-        map.putIfAbsent(id, value);
+        map.putIfAbsent(idIncGet(id), value);
     }
 
     public void update(int id, String value) {
