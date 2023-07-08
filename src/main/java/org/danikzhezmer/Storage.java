@@ -18,11 +18,12 @@ public class Storage {
     }
 
     public String get(int id) {
+
         return map.get(id);
     }
 
     public List<String> getAll() {
-        return (List<String>) map.values();
+        return  map.values().stream().toList();
     }
 
     public void create(String value) {
@@ -35,6 +36,9 @@ public class Storage {
     }
 
     public void delete(int id) {
-        map.remove(id);
+        if (id > map.size()){
+            System.out.println("deleting impossible");
+            return;
+        }else map.remove(id);
     }
 }

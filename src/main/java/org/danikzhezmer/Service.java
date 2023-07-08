@@ -1,15 +1,6 @@
 package org.danikzhezmer;
 
 import org.danikzhezmer.model.Command;
-
-/**
- * 4. убедится что все операции в хэшмап работают
- *
- *
- * 5. видосик про гит
- * 6. оформить все как мердж реквест
- * 7. скинуть ссылку на реквест
- */
 public class Service {
     private Storage storage;
 
@@ -36,15 +27,16 @@ public class Service {
     }
     private void executeUpdate(Command command){
         storage.update(command.getId(), command.getValue());
-        System.out.println("updated");
+        System.out.printf("String with id = {%d} updated\n", command.getId());
     }
     private void executeDelete(Command command){
+
         storage.delete(command.getId());
-        System.out.println("deleted");
+        System.out.printf("String with id = {%d} deleted\n", command.getId());
     }
     private void executeCreate(Command command){
         storage.create(command.getValue());
-        System.out.println("created");
+        System.out.printf("String saved with id = {%d}\n", command.getId());
     }
 
 }

@@ -29,7 +29,7 @@ public class Main {
             try{
                Command command = parser.parse(line);
                service.execute(command);
-               System.out.println(command);
+
 
             }catch(Exception e){
                 System.out.println(e.getMessage());
