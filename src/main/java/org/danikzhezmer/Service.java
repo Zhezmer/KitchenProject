@@ -32,11 +32,13 @@ public class Service {
     private void executeDelete(Command command){
 
         storage.delete(command.getId());
-        System.out.printf("String with id = {%d} deleted\n", command.getId());
+        System.out.println("String deleted");
     }
     private void executeCreate(Command command){
-        storage.create(command.getValue());
-        System.out.printf("String saved with id = {%d}\n", command.getId());
+        Integer id = storage.create(command.getValue());
+        System.out.printf("String saved with id = {%s}\n", id);
+   //     storage.create(command.getValue());
+     //   System.out.printf("String saved with id = {%d}\n", storage.get(command.getId()));
     }
 
 }

@@ -26,9 +26,10 @@ public class Storage {
         return  map.values().stream().toList();
     }
 
-    public void create(String value) {
+    public Integer create(String value) {
         id.incrementAndGet();
         map.putIfAbsent(id.get(), value);
+        return id.get();
     }
 
     public void update(int id, String value) {
@@ -36,9 +37,6 @@ public class Storage {
     }
 
     public void delete(int id) {
-        if (id > map.size()){
-            System.out.println("deleting impossible");
-            return;
-        }else map.remove(id);
+        map.remove(id);
     }
 }
