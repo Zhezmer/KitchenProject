@@ -1,7 +1,6 @@
 package org.danikzhezmer;
 
 import org.danikzhezmer.model.Command;
-
 public class Service {
     private Storage storage;
 
@@ -10,6 +9,36 @@ public class Service {
     }
 
     public void execute(Command command){
+        switch (command.getCommandType()){
+            case GET -> executeGet(command);
+            case GET_ALL -> executeGetAll(command);
+            case CREATE -> executeCreate(command);
+            case DELETE -> executeDelete(command);
+            case UPDATE -> executeUpdate(command);
+        }
+    }
+
+    private void executeGet(Command command){
+        System.out.println(storage.get(command.getId()));
 
     }
+    private void executeGetAll(Command command){
+        System.out.println(storage.getAll());
+    }
+    private void executeUpdate(Command command){
+        storage.update(command.getId(), command.getValue());
+        System.out.printf("String with id = {%d} updated\n", command.getId());
+    }
+    private void executeDelete(Command command){
+
+        storage.delete(command.getId());
+        System.out.println("String deleted");
+    }
+    private void executeCreate(Command command){
+        Integer id = storage.create(command.getValue());
+        System.out.printf("String saved with id = {%s}\n", id);
+   //     storage.create(command.getValue());
+     //   System.out.printf("String saved with id = {%d}\n", storage.get(command.getId()));
+    }
+
 }

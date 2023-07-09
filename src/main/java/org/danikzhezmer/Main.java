@@ -14,6 +14,9 @@ public class Main {
         Validator validator = new Validator();
         Parser parser = new Parser(validator);
 
+        Storage storage = new Storage();
+        Service service = new Service(storage);
+
         Scanner scanner = new Scanner(System.in);
         String line;
 
@@ -25,7 +28,8 @@ public class Main {
 
             try{
                Command command = parser.parse(line);
-                System.out.println(command);
+               service.execute(command);
+
 
             }catch(Exception e){
                 System.out.println(e.getMessage());

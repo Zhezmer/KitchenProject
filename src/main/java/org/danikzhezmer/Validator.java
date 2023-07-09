@@ -24,7 +24,7 @@ public class Validator {
         if (!"create".equals(words[0])) {
             wrongCommand("wrong command");
         }
-        System.out.println("validateCreate");
+
     }
 
     //update 12 new String
@@ -39,7 +39,7 @@ public class Validator {
         if (isNotInt(words[1])) {
             wrongCommand("id is not integer");
         }
-        System.out.println("validateUpdate");
+
     }
 
     private void validateDelete(String value) {
@@ -53,7 +53,7 @@ public class Validator {
         if (isNotInt(words[1])) {
             wrongCommand("id is not integer");
         }
-        System.out.println("validateDelete");
+
     }
 
     //два кейса, гет без индекса и с индексом
@@ -69,7 +69,7 @@ public class Validator {
         if (words.length > 1 && isNotInt(words[1])) {
             wrongCommand("id is not integer");
         }
-        System.out.println("validateGet");
+
     }
 
     private boolean isNotInt(String s) {
