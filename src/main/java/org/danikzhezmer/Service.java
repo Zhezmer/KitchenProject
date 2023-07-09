@@ -37,8 +37,6 @@ public class Service {
     private void executeCreate(Command command){
         Integer id = storage.create(command.getValue());
         System.out.printf("String saved with id = {%s}\n", id);
-   //     storage.create(command.getValue());
-     //   System.out.printf("String saved with id = {%d}\n", storage.get(command.getId()));
     }
 
 }
