@@ -1,6 +1,7 @@
 package org.danikzhezmer;
 
 public class Validator {
+    //todo add objectmapper попробовать велью привести к классу бук везде где валидируется
 
     public void validate(String value) {
         String[] words = value.split(" ");

@@ -1,16 +1,18 @@
 package org.danikzhezmer;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Storage {
-    private HashMap<Integer, String> map = new HashMap<>();
+    //todo заменить на мап<Integer book> (everywhere)
+    private Map<Integer, String> map = new HashMap<>();
     private AtomicInteger id = new AtomicInteger(0);
 
-    public Storage(HashMap<Integer, String> map, AtomicInteger id) {
+    public Storage(Map<Integer, String> map) {
         this.map = map;
-        this.id = id;
+        Integer maxId = map.keySet().stream().max(Integer::compareTo).orElse(0);
+        this.id = new AtomicInteger(maxId);
     }
 
     public Storage() {
@@ -22,8 +24,8 @@ public class Storage {
         return map.get(id);
     }
 
-    public List<String> getAll() {
-        return  map.values().stream().toList();
+    public Map<Integer, String> getAll() {
+        return map;
     }
 
     public Integer create(String value) {

@@ -23,7 +23,7 @@ public class Service {
 
     }
     private void executeGetAll(Command command){
-        System.out.println(storage.getAll());
+        System.out.println(storage.getAll().values().stream().toList());
     }
     private void executeUpdate(Command command){
         storage.update(command.getId(), command.getValue());

@@ -10,11 +10,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-
+        Loader loader = new Loader();
         Validator validator = new Validator();
         Parser parser = new Parser(validator);
 
-        Storage storage = new Storage();
+        Storage storage = new Storage(loader.loadFromFile());
         Service service = new Service(storage);
 
         Scanner scanner = new Scanner(System.in);
@@ -23,6 +23,7 @@ public class Main {
         while (true) {
             line = scanner.nextLine();
             if(line.equals("exit")){
+                loader.saveToFile(storage.getAll());
                 break;
             }
 

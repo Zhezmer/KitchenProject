@@ -3,6 +3,7 @@ package org.danikzhezmer.model;
 public class Command {
     private CommandType commandType;
     private int id;
+    //todo string to book
     private String value;
 
     public CommandType getCommandType() {

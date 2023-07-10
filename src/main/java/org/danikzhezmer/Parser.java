@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Parser {
+    //todo добавить обджек маппер и в криет и апдейт распарсить бук
+
     Validator validator;
 
     public Parser(Validator validator) {
