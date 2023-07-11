@@ -2,7 +2,7 @@ package org.danikzhezmer;
 
 import org.danikzhezmer.model.Command;
 public class Service {
-    private Storage storage;
+    private final Storage storage;
 
     public Service(Storage storage) {
         this.storage = storage;
@@ -11,7 +11,7 @@ public class Service {
     public void execute(Command command){
         switch (command.getCommandType()){
             case GET -> executeGet(command);
-            case GET_ALL -> executeGetAll(command);
+            case GET_ALL -> executeGetAll();
             case CREATE -> executeCreate(command);
             case DELETE -> executeDelete(command);
             case UPDATE -> executeUpdate(command);
@@ -22,21 +22,21 @@ public class Service {
         System.out.println(storage.get(command.getId()));
 
     }
-    private void executeGetAll(Command command){
+    private void executeGetAll(){
         System.out.println(storage.getAll().values().stream().toList());
     }
     private void executeUpdate(Command command){
-        storage.update(command.getId(), command.getValue());
-        System.out.printf("String with id = {%d} updated\n", command.getId());
+        storage.update(command.getId(), command.getBook());
+        System.out.printf("Book with id = {%d} updated\n", command.getId());
     }
     private void executeDelete(Command command){
 
         storage.delete(command.getId());
-        System.out.println("String deleted");
+        System.out.println("Book deleted");
     }
     private void executeCreate(Command command){
-        Integer id = storage.create(command.getValue());
-        System.out.printf("String saved with id = {%s}\n", id);
+        Integer id = storage.create(command.getBook());
+        System.out.printf("Book saved with id = {%s}\n", id);
     }
 
 }
