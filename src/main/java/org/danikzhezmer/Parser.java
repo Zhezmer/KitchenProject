@@ -66,7 +66,7 @@ public class Parser {
 
     //CREATE new value
     private Command parseCreate(String value) {
-        String[] args = value.split(" ");
+       // String[] args = value.split(" ");
         Command command = new Command();
         command.setCommandType(CommandType.CREATE);
         Book book = parseBook(value);

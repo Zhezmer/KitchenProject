@@ -3,20 +3,20 @@ package org.danikzhezmer;
 import org.danikzhezmer.model.Book;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+
 
 public class Loader {
     private static final String FILE_NAME = "map.properties";
     String path = System.getProperty("user.home") + File.separator + FILE_NAME;
+    Properties properties = new Properties();
 
     public void saveToFile(Map<Integer, Book> map) {
-        try {
-            FileOutputStream fos = new FileOutputStream(getFileOrCreateIfNotExists());
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(map);
-            oos.flush();
-            oos.close();
-            fos.close();
+        try ( FileOutputStream fos = new FileOutputStream(getFileOrCreateIfNotExists())) {
+            properties.putAll(map);
+            properties.store(fos, null);
         } catch (Exception e) {
             throw new RuntimeException("Saving is failed" + e.getMessage());
         }
@@ -24,20 +24,18 @@ public class Loader {
 
 
     public Map<Integer, Book> loadFromFile() {
-        Map<Integer, Book> mapInFile;
-        try {
-            FileInputStream fis = new FileInputStream(getFileOrCreateIfNotExists());
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            mapInFile = (Map<Integer, Book>) ois.readObject();
-            ois.close();
-            fis.close();
-            for (Map.Entry<Integer, Book> m : mapInFile.entrySet()) {
-                System.out.println(m.getKey() + " : " + m.getValue());
+
+        try (FileInputStream fis = new FileInputStream(getFileOrCreateIfNotExists())) {
+            Map<Integer, Book> map = new HashMap<>();
+            properties.load(fis);
+            for (String key : properties.stringPropertyNames()) {
+                map.put(Integer.parseInt(key), (Book) properties.get(key));
             }
+            return map;
         } catch (Exception e) {
             throw new RuntimeException("Loading is failed " + e.getMessage());
         }
-        return mapInFile;
+
     }
 
     private File getFileOrCreateIfNotExists() throws IOException {
