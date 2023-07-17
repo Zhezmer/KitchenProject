@@ -1,39 +1,38 @@
 package org.danikzhezmer;
 
+import org.danikzhezmer.model.Book;
+
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Storage {
-    private HashMap<Integer, String> map = new HashMap<>();
+
+    private Map<Integer, Book> map = new HashMap<>();
     private AtomicInteger id = new AtomicInteger(0);
 
-    public Storage(HashMap<Integer, String> map, AtomicInteger id) {
+    public Storage(Map<Integer, Book> map) {
         this.map = map;
-        this.id = id;
+        Integer maxId = map.keySet().stream().max(Integer::compareTo).orElse(0);
+        this.id = new AtomicInteger(maxId);
     }
-
-    public Storage() {
-
-    }
-
-    public String get(int id) {
+    public Book get(int id) {
 
         return map.get(id);
     }
 
-    public List<String> getAll() {
-        return  map.values().stream().toList();
+    public Map<Integer, Book> getAll() {
+        return map;
     }
 
-    public Integer create(String value) {
+    public Integer create(Book book) {
         id.incrementAndGet();
-        map.putIfAbsent(id.get(), value);
+        map.putIfAbsent(id.get(), book);
         return id.get();
     }
 
-    public void update(int id, String value) {
-        map.replace(id, value);
+    public void update(int id, Book book) {
+        map.replace(id, book);
     }
 
     public void delete(int id) {

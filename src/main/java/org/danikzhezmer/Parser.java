@@ -1,13 +1,16 @@
 package org.danikzhezmer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.danikzhezmer.model.Book;
 import org.danikzhezmer.model.Command;
 import org.danikzhezmer.model.CommandType;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public class Parser {
+
+
     Validator validator;
+    ObjectMapper objectMapper = new ObjectMapper();
 
     public Parser(Validator validator) {
         this.validator = validator;
@@ -56,16 +59,18 @@ public class Parser {
         Command command = new Command();
         command.setCommandType(CommandType.UPDATE);
         command.setId(Integer.parseInt(args[1]));
-        command.setValue(Arrays.stream(args).skip(2).collect(Collectors.joining(" ")));
+        Book book = parseBook(value);
+        command.setBook(book);
         return command;
     }
 
     //CREATE new value
     private Command parseCreate(String value) {
-        String[] args = value.split(" ");
+       // String[] args = value.split(" ");
         Command command = new Command();
         command.setCommandType(CommandType.CREATE);
-        command.setValue(Arrays.stream(args).skip(1).collect(Collectors.joining(" ")));
+        Book book = parseBook(value);
+        command.setBook(book);
         return command;
     }
 
@@ -76,6 +81,17 @@ public class Parser {
         command.setCommandType(CommandType.DELETE);
         command.setId(Integer.parseInt(args[1]));
         return command;
+    }
+    private Book parseBook(String command) {
+        try {
+            return objectMapper.readValue(getBookString(command), Book.class);
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("wrong command");
+        }
+    }
+
+    private String getBookString(String command) {
+        return command.substring(command.indexOf('{'));
     }
 
 

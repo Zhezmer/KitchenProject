@@ -3,7 +3,7 @@ package org.danikzhezmer.model;
 public class Command {
     private CommandType commandType;
     private int id;
-    private String value;
+    private Book book;
 
     public CommandType getCommandType() {
         return commandType;
@@ -21,12 +21,12 @@ public class Command {
         this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public Book getBook() {
+        return book;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Command {
         return "Command{" +
                 "commandType=" + commandType +
                 ", id=" + id +
-                ", value='" + value + '\'' +
+                ", book=" + book +
                 '}';
     }
 }

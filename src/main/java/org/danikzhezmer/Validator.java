@@ -1,7 +1,12 @@
 package org.danikzhezmer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.danikzhezmer.model.Book;
+
 public class Validator {
 
+   private final ObjectMapper objectMapper = new ObjectMapper();
     public void validate(String value) {
         String[] words = value.split(" ");
         switch (words[0]) {
@@ -16,6 +21,7 @@ public class Validator {
         throw new IllegalArgumentException(message);
     }
 
+    // create {title: harry, author: rowling}
     private void validateCreate(String value) {
         String[] words = value.split(" ");
         if (words.length < 2) {
@@ -23,6 +29,11 @@ public class Validator {
         }
         if (!"create".equals(words[0])) {
             wrongCommand("wrong command");
+        }
+        try {
+            objectMapper.readValue(getBookString(value), Book.class);
+        } catch (JsonProcessingException e) {
+            wrongCommand("value is not book");
         }
 
     }
@@ -38,6 +49,11 @@ public class Validator {
         }
         if (isNotInt(words[1])) {
             wrongCommand("id is not integer");
+        }
+        try {
+            objectMapper.readValue(getBookString(value), Book.class);
+        } catch (JsonProcessingException e) {
+            wrongCommand("value is not book");
         }
 
     }
@@ -70,6 +86,9 @@ public class Validator {
             wrongCommand("id is not integer");
         }
 
+    }
+    private String getBookString(String command) {
+        return command.substring(command.indexOf('{'));
     }
 
     private boolean isNotInt(String s) {
