@@ -39,7 +39,7 @@ public class ValidatorTest {
     }
     @Test
     void validateUpdateTest(){
-        assertDoesNotThrow(() -> validator.validate("update 2 frog"));
+        assertDoesNotThrow(() -> validator.validate("update 2 {\"title\":\"Harry Potter\",\"author\":\"J. K. Rowling\"}"));
     }
     @Test
     void validateUpdateFailTest(){
@@ -53,7 +53,7 @@ public class ValidatorTest {
     }
     @Test
     void validateCreateTest(){
-        assertDoesNotThrow(() -> validator.validate("create frog"));
+        assertDoesNotThrow(() -> validator.validate("create {\"title\":\"Harry Potter\",\"author\":\"J. K. Rowling\"}"));
     }
     @Test
     void validateCreateFailTest(){
