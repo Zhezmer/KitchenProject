@@ -5,6 +5,25 @@ public class Command {
     private int id;
     private Book book;
 
+    public Command(CommandType commandType, int id, Book book) {
+        this.commandType = commandType;
+        this.id = id;
+        this.book = book;
+    }
+
+    public Command(CommandType commandType, int id) {
+        this.commandType = commandType;
+        this.id = id;
+    }
+
+    public Command() {
+    }
+
+    public Command(CommandType commandType, Book book) {
+        this.commandType = commandType;
+        this.book = book;
+    }
+
     public CommandType getCommandType() {
         return commandType;
     }

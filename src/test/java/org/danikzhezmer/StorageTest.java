@@ -37,15 +37,15 @@ public class StorageTest {
         Storage storage = new Storage(newMap);
 
         storage.update(1, book2);
-        assertEquals(1, map.size());
-        assertEquals(book2, map.get(1));
+        assertEquals(1, newMap.size());
+        assertEquals(book2, storage.getAll().get(1));
     }
     @Test
     void deleteTest(){
         Map<Integer, Book> newMap = Map.of(1, book1);
         Storage storage = new Storage(newMap);
         storage.delete(1);
-        assertEquals(null, storage.get(1));
+        assertNull(storage.get(1));
 
     }
 
