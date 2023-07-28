@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class BookDAO {
     public Book getBookById(int id) {
@@ -35,11 +35,12 @@ public class BookDAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 HashMap<Integer, Book> res = new HashMap<>();
+
                 while (resultSet.next()) {
                     Book book = new Book();
                     book.setAuthor(resultSet.getString("author"));
                     book.setTitle(resultSet.getString("title"));
-                    res.put(, book);
+                    res.put(resultSet.getInt("id"), book);
                 }
                 return res;
             } catch (SQLException e) {
@@ -63,11 +64,12 @@ public class BookDAO {
     }
 
     public void updateBook(Book book) {
-        String sql = "UPDATE book SET author = ?, title = ?, WHERE id = max(id)";
+        String sql = "UPDATE book SET author = ?, title = ?, WHERE id = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, book.getAuthor());
             statement.setString(2, book.getTitle());
+            statement.setInt(3, book.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
