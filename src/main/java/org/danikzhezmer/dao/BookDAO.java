@@ -50,7 +50,7 @@ public class BookDAO {
 
     }
 
-    public void CreateBook(Book book) {
+    public void createBook(Book book) {
         String sql = "INSERT INTO book (title, author) VALUES (?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
