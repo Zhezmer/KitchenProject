@@ -13,7 +13,7 @@ public class Service {
     }
 
     public void execute(Command command) throws SQLException {
-        switch (command.getCommandType()){
+        switch (command.getCommandType()) {
             case GET -> executeGet(command);
             case GET_ALL -> executeGetAll();
             case CREATE -> executeCreate(command);
@@ -22,26 +22,30 @@ public class Service {
         }
     }
 
-    private void executeGet(Command command){
+    private void executeGet(Command command) {
 
         System.out.println(bookDAO.getBookById(command.getId()));
 
     }
+
     private void executeGetAll() throws SQLException {
-        System.out.println(bookDAO.getAll().values().stream().toList());
+        bookDAO.getAll().forEach((k, v) -> System.out.printf("%s: %s", k, v));
     }
-    private void executeUpdate(Command command){
-        bookDAO.updateBook(command.getBook());
+
+    private void executeUpdate(Command command) {
+        bookDAO.updateBook(command.getBook(), command.getId());
         System.out.printf("Book with id = {%d} updated\n", command.getId());
     }
-    private void executeDelete(Command command){
+
+    private void executeDelete(Command command) {
 
         bookDAO.deleteBookById(command.getId());
         System.out.println("Book deleted");
     }
-    private void executeCreate(Command command){
-        bookDAO.createBook(command.getBook());
-        System.out.printf("Book saved with id = {%s}\n", command.getId());
+
+    private void executeCreate(Command command) {
+        int id = bookDAO.createBook(command.getBook());
+        System.out.printf("Book saved with id = {%s}\n", id);
     }
 
 }

@@ -50,26 +50,45 @@ public class BookDAO {
 
     }
 
-    public void createBook(Book book) {
+    public int createBook(Book book) {
         String sql = "INSERT INTO book (title, author) VALUES (?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, book.getTitle());
             statement.setString(2, book.getAuthor());
-            statement.executeUpdate();
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                return getLastId();
+            } else {
+                throw new RuntimeException("Couldn't save person");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
+    private int getLastId(){
+        String sql = "SELECT max(id) as max_id from book";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()){
+            if(resultSet.next()){
+                return resultSet.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
 
-    public void updateBook(Book book) {
-        String sql = "UPDATE book SET author = ?, title = ?, WHERE id = ?";
+        }
+        return -1;
+    }
+    public void updateBook(Book book, int id) {
+        String sql = "UPDATE book SET author = ?, title = ? WHERE id = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, book.getAuthor());
             statement.setString(2, book.getTitle());
-            statement.setInt(3, book.getId());
+            statement.setInt(3, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
