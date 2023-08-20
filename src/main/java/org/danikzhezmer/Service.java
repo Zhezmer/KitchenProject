@@ -1,15 +1,19 @@
 package org.danikzhezmer;
 
+import org.danikzhezmer.dao.BookDAO;
 import org.danikzhezmer.model.Command;
-public class Service {
-    private final Storage storage;
 
-    public Service(Storage storage) {
-        this.storage = storage;
+import java.sql.SQLException;
+
+public class Service {
+    private final BookDAO bookDAO;
+
+    public Service(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
     }
 
-    public void execute(Command command){
-        switch (command.getCommandType()){
+    public void execute(Command command) throws SQLException {
+        switch (command.getCommandType()) {
             case GET -> executeGet(command);
             case GET_ALL -> executeGetAll();
             case CREATE -> executeCreate(command);
@@ -18,24 +22,29 @@ public class Service {
         }
     }
 
-    private void executeGet(Command command){
-        System.out.println(storage.get(command.getId()));
+    private void executeGet(Command command) {
+
+        System.out.println(bookDAO.getBookById(command.getId()));
 
     }
-    private void executeGetAll(){
-        System.out.println(storage.getAll().values().stream().toList());
+
+    private void executeGetAll() throws SQLException {
+        bookDAO.getAll().forEach((k, v) -> System.out.printf("%s: %s", k, v));
     }
-    private void executeUpdate(Command command){
-        storage.update(command.getId(), command.getBook());
+
+    private void executeUpdate(Command command) {
+        bookDAO.updateBook(command.getBook(), command.getId());
         System.out.printf("Book with id = {%d} updated\n", command.getId());
     }
-    private void executeDelete(Command command){
 
-        storage.delete(command.getId());
+    private void executeDelete(Command command) {
+
+        bookDAO.deleteBookById(command.getId());
         System.out.println("Book deleted");
     }
-    private void executeCreate(Command command){
-        Integer id = storage.create(command.getBook());
+
+    private void executeCreate(Command command) {
+        int id = bookDAO.createBook(command.getBook());
         System.out.printf("Book saved with id = {%s}\n", id);
     }
 

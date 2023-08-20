@@ -1,5 +1,6 @@
 package org.danikzhezmer;
 
+import org.danikzhezmer.dao.BookDAO;
 import org.danikzhezmer.model.Command;
 
 
@@ -10,12 +11,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Loader loader = new Loader();
+
         Validator validator = new Validator();
         Parser parser = new Parser(validator);
 
-        Storage storage = new Storage(loader.loadFromFile());
-        Service service = new Service(storage);
+        BookDAO bookDao = new BookDAO();
+        Service service = new Service(bookDao);
 
         Scanner scanner = new Scanner(System.in);
         String line;
@@ -23,8 +24,7 @@ public class Main {
         while (true) {
             line = scanner.nextLine();
             if(line.equals("exit")){
-                loader.saveToFile(storage.getAll());
-                break;
+               break;
             }
 
             try{
